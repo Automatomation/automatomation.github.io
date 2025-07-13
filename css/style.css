@@ -1,0 +1,105 @@
+body {
+  font-family: sans-serif;
+  background-color: #111;
+  color: #fff;
+  margin: 0;
+  padding: 20px;
+  text-align: center;
+}
+
+#game {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+#bar-container {
+  display: flex;
+  align-items: flex-end;
+  height: 200px;
+  margin: 20px 0;
+  background-color: #222;
+  padding: 10px;
+  border-radius: 8px;
+  gap: 2px;
+}
+
+.bar {
+  flex: 1;
+  background-color: #4caf50;
+  transition: height 0.3s ease, background-color 0.2s ease;
+  border-radius: 2px;
+}
+
+/* Comparison highlight */
+.bar.comparing {
+  background-color: yellow;
+}
+
+/* Swap highlight */
+.bar.swapping {
+  background-color: red;
+}
+
+#controls {
+  margin-top: 20px;
+}
+
+button {
+  background: #333;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  cursor: pointer;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+button:hover {
+  background: #555;
+}
+
+/* Sidebars */
+.sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 200px;
+  padding: 20px;
+  background-color: #1a1a1a;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 10;
+}
+
+#left-menu {
+  left: 0;
+  border-right: 1px solid #333;
+}
+
+#right-menu {
+  right: 0;
+  border-left: 1px solid #333;
+}
+
+.sidebar h3 {
+  margin-top: 0;
+  font-size: 18px;
+  text-align: center;
+}
+
+.sidebar button {
+  background: #333;
+  border: none;
+  color: white;
+  padding: 8px;
+  cursor: not-allowed;
+  border-radius: 4px;
+  text-align: left;
+}
+
+.sidebar button:hover {
+  background: #444;
+}
