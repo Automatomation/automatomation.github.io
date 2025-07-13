@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sorting Idle Game</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div id="left-menu" class="sidebar">
+    <h3>Algorithm Upgrades</h3>
+    <button disabled>Insertion Sort (Unlock: $50)</button>
+    <button disabled>Bubble Sort Speed +10% ($25)</button>
+  </div>
+
+  <div id="right-menu" class="sidebar right">
+  <h3>System Upgrades</h3>
+  <button id="ram-upgrade" disabled>+10 RAM ($30)</button>
+  <button id="bar-upgrade" disabled>+5 Bars ($20)</button>
+</div>  
+
+  <div id="game">
+    <h1>Sorting Idle Game</h1>
+
+    <div id="info-panel">
+      <p>Money: <span id="money">0</span></p>
+      <p>Algorithm: <span id="algorithm-name">Bubble Sort</span></p>
+      <p>Step #: <span id="step-count">0</span></p>
+    </div>
+
+    <div id="bar-container"></div>
+
+    <div id="controls">
+      <button id="sort-button">Step Sort</button>
+      <button id="auto-toggle">Auto: Off</button>
+    </div>
+  </div>
+
+  <script type="module" src="./js/main.js"></script>
+</body>
+</html>
