@@ -1,0 +1,105 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: Arial, sans-serif;
+  color: white;
+  overflow: hidden;
+  position: relative;
+  background: transparent;
+}
+
+#album-cover {
+  width: 80vw;
+  max-width: 300px;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
+  background: #222;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  margin-bottom: 1rem;
+}
+
+#album-cover:hover {
+  transform: scale(1.03);
+}
+
+#background-blur {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -1;
+  filter: blur(50px);
+  transition: opacity 0.5s ease;
+  opacity: 1;
+}
+
+#start-button {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 5rem;
+  cursor: pointer;
+  z-index: 10;
+  user-select: none;
+  color: white;
+}
+
+#container {
+  display: none;
+  position: relative;
+  min-height: 100vh;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 1rem;
+  box-sizing: border-box;
+  z-index: 1;
+}
+
+#track-title,
+#artist-name {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+}
+
+#progress-bar {
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  color: #ddd;
+  font-family: monospace;
+}
+
+/* Responsive tweaks for very small devices */
+@media (max-width: 480px) {
+  #track-title, #artist-name {
+    font-size: 1rem;
+  }
+
+  #progress-bar {
+    font-size: 0.9rem;
+  }
+
+  #start-button {
+    font-size: 3rem;
+  }
+}
+
+audio {
+  display: none;
+}
