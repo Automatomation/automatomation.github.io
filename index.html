@@ -2,40 +2,30 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sorting Idle Game</title>
-  <link rel="stylesheet" href="css/style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Simple Music Player</title>
+  <style>
+    body { font-family: Arial; text-align: center; padding: 2rem; }
+    audio { width: 100%; max-width: 400px; margin: 1rem 0; }
+  </style>
 </head>
 <body>
-  <div id="left-menu" class="sidebar">
-    <h3>Algorithm Upgrades</h3>
-    <button disabled>Insertion Sort (Unlock: $50)</button>
-    <button disabled>Bubble Sort Speed +10% ($25)</button>
+  <h1>My Music Player</h1>
+
+  <div>
+    <p>Track 1</p>
+    <audio controls>
+      <source src="https://www.dropbox.com/s/yourfileid/track1.mp3?raw=1" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
   </div>
 
-  <div id="right-menu" class="sidebar right">
-  <h3>System Upgrades</h3>
-  <button id="ram-upgrade" disabled>+10 RAM ($30)</button>
-  <button id="bar-upgrade" disabled>+5 Bars ($20)</button>
-</div>  
-
-  <div id="game">
-    <h1>Sorting Idle Game</h1>
-
-    <div id="info-panel">
-      <p>Money: <span id="money">0</span></p>
-      <p>Algorithm: <span id="algorithm-name">Bubble Sort</span></p>
-      <p>Step #: <span id="step-count">0</span></p>
-    </div>
-
-    <div id="bar-container"></div>
-
-    <div id="controls">
-      <button id="sort-button">Step Sort</button>
-      <button id="auto-toggle">Auto: Off</button>
-    </div>
+  <div>
+    <p>Track 2</p>
+    <audio controls>
+      <source src="https://www.dropbox.com/s/yourfileid/track2.mp3?raw=1" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
   </div>
-
-  <script type="module" src="./js/main.js"></script>
 </body>
 </html>
