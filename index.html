@@ -2,30 +2,190 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Simple Music Player</title>
+  <title>RadioBox</title>
   <style>
-    body { font-family: Arial; text-align: center; padding: 2rem; }
-    audio { width: 100%; max-width: 400px; margin: 1rem 0; }
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: Arial, sans-serif;
+      color: white;
+      overflow: hidden;
+      position: relative;
+      background: transparent;
+    }
+
+    #album-cover {
+      max-width: 300px;
+      max-height: 300px;
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
+      object-fit: contain;
+      background: #222;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    #album-cover:hover {
+      transform: scale(1.03);
+    }
+
+    #background-blur {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: -1;
+      filter: blur(50px);
+      transition: opacity 0.5s ease;
+      opacity: 1;
+    }
+
+    #start-button {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 5rem;
+      cursor: pointer;
+      z-index: 10;
+      user-select: none;
+      color: white;
+    }
+
+    #container {
+      display: none;
+      position: relative;
+      height: 100vh;
+      background: transparent;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 0 1rem;
+      z-index: 1;
+    }
+
+    #track-title,
+    #artist-name {
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+      text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+    }
+
+    audio {
+      display: none;
+    }
   </style>
 </head>
 <body>
-  <h1>My Music Player</h1>
+  <img id="background-blur" src="" alt="Background Blur" />
 
-  <div>
-    <p>Track 1</p>
-    <audio controls>
-      <source src="https://www.dropbox.com/scl/fi/rdz31z6lvoh3lzu7bt5rq/Changes-2021-Remaster.mp3?rlkey=0ukfkoh570ycbh8iu8enikjqg&st=o2msyxs8&raw=1" type="audio/mpeg">
-      Your browser does not support the audio element.
-    </audio>
+  <div id="start-button" title="Start Radio">🎧</div>
+
+  <div id="container">
+    <img id="album-cover" src="" alt="Album Cover" title="Click to Play/Pause" />
+    <div id="track-title"></div>
+    <div id="artist-name"></div>
+    <audio id="player" controls></audio>
   </div>
 
-  <div>
-    <p>Track 2</p>
-    <audio controls>
-      <source src="https://www.dropbox.com/s/yourfileid/track2.mp3?raw=1" type="audio/mpeg">
-      Your browser does not support the audio element.
-    </audio>
-  </div>
+  <script>
+    const playlist = [
+      {
+        title: "Changes",
+        artist: "Black Sabbath",
+        url: "https://www.dropbox.com/scl/fi/rdz31z6lvoh3lzu7bt5rq/Changes-2021-Remaster.mp3?rlkey=0ukfkoh570ycbh8iu8enikjqg&st=o2msyxs8&raw=1",
+        cover: "assets/paranoid.jpg"
+      },
+      {
+        title: "War Pigs",
+        artist: "Black Sabbath",
+        url: "https://www.dropbox.com/scl/fi/9kinzfoapyabnk6mx8pvs/Black-Sabbath-War-Pigs.mp3?rlkey=vnkrbvk70qptzmmrh9ootbozz&st=momd81lv&raw=1",
+        cover: "assets/electric_ladyland.jpg"
+      }
+    ];
+
+    let currentTrack = 0;
+    let isPlaying = false;
+
+    const audio = document.getElementById("player");
+    const title = document.getElementById("track-title");
+    const artist = document.getElementById("artist-name");
+    const startButton = document.getElementById("start-button");
+    const backgroundBlur = document.getElementById("background-blur");
+    const albumCover = document.getElementById("album-cover");
+    const container = document.getElementById("container");
+
+    function loadTrack(index) {
+      if (index >= playlist.length) {
+        title.textContent = "No more tracks.";
+        backgroundBlur.src = "";
+        albumCover.src = "";
+        return;
+      }
+
+      const track = playlist[index];
+      audio.src = track.url;
+      title.textContent = track.title;
+      artist.textContent = track.artist;
+      backgroundBlur.src = track.cover;
+      albumCover.src = track.cover;
+
+      audio.load();
+      audio.play().then(() => {
+        isPlaying = true;
+      }).catch(err => console.warn("Autoplay blocked:", err));
+    }
+
+    function checkNearEnd() {
+      if (audio.duration - audio.currentTime < 5) {
+        audio.removeEventListener("timeupdate", checkNearEnd);
+        audio.addEventListener("ended", handleTrackEnd, { once: true });
+      }
+    }
+
+    function handleTrackEnd() {
+      currentTrack++;
+      if (currentTrack < playlist.length) {
+        loadTrack(currentTrack);
+        audio.addEventListener("timeupdate", checkNearEnd);
+      } else {
+        title.textContent = "All tracks finished.";
+        backgroundBlur.src = "";
+        albumCover.src = "";
+        isPlaying = false;
+      }
+    }
+
+    albumCover.addEventListener("click", () => {
+      if (!audio.src) return;
+      if (audio.paused) {
+        audio.play();
+        isPlaying = true;
+      } else {
+        audio.pause();
+        isPlaying = false;
+      }
+    });
+
+    startButton.addEventListener("click", () => {
+      startButton.style.display = "none";
+      container.style.display = "flex";
+      backgroundBlur.style.display = "block";
+      loadTrack(currentTrack);
+      audio.addEventListener("timeupdate", checkNearEnd);
+    });
+  </script>
 </body>
 </html>
